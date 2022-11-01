@@ -1,45 +1,24 @@
+import axios from "axios";
 import React, { useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 
 function User() {
   const [users, setUsers] = useState([]);
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
-    setUsers([
-      {
-        id: 1,
-        username: "Person 1",
-        email: "person1@gmail.com",
-        country: "India",
-        state: "Tamil Nadu",
-        city: "Chennai",
-        phone: "9840198401",
-        dob: "05/04/2000",
-        gender: "Male",
-      },
-      {
-        id: 2,
-        username: "Person 2",
-        email: "person2@gmail.com",
-        country: "India",
-        state: "Tamil Nadu",
-        city: "Madurai",
-        phone: "9840198410",
-        dob: "19/09/2001",
-        gender: "Female",
-      },
-      {
-        id: 3,
-        username: "Person 3",
-        email: "person1@gmail.com",
-        country: "India",
-        state: "Tamil Nadu",
-        city: "Chennai",
-        phone: "9840198501",
-        dob: "05/04/2001",
-        gender: "Female",
-      }
-    ])
+   fetchData()
   }, []);
+  let fetchData = async () =>{
+    try{
+      setLoading(true)
+      const users = await axios.get("https://635fff92ca0fe3c21aaa41e9.mockapi.io/user")
+      setUsers(users.data)
+      setLoading(false)
+    }
+    catch (error){
+      alert("Error")
+    }
+  }
 
   let deleteUser = () =>{
     const result = window.confirm("Are you sure do you want to delete?");
@@ -59,15 +38,11 @@ function User() {
           <i class="fas fa-download fa-sm text-white-50"></i> Create User
         </Link>
       </div>
-      <p class="mb-4">
-        DataTables is a third party plugin that is used to generate the demo
-        table below. For more information about DataTables, please visit the{" "}
-        <a target="_blank" href="https://datatables.net">
-          official DataTables documentation
-        </a>
-        .
-      </p>
 
+      { isLoading ? 
+      <div class="spinner-border text-primary" role="status">
+  <span class="sr-only">Loading...</span>
+      </div> :
       <div class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
@@ -113,7 +88,7 @@ function User() {
                 users.map((user) => {
                   return <tr>
                     <td>{user.id}</td>
-                    <td>{user.username}</td>
+                    <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.country}</td>
                     <td>{user.state}</td>
@@ -122,13 +97,13 @@ function User() {
                     <td>{user.dob}</td>
                     <td>{user.gender}</td>
                     <td>
-                      <Link to={`/user/${user.id}`} className ="btn btn-success mr-2 ">
+                      <Link to={`/user/${user.id}`} className ="btn btn-success m-1 ">
                         View
                       </Link>
-                      <Link to={`/edit/${user.id}`} className ="btn btn-warning mr-2">
+                      <Link to={`/edit/${user.id}`} className ="btn btn-warning m-1">
                         Edit
                       </Link>
-                      <button onClick={() => deleteUser()} className ="btn btn-danger">
+                      <button onClick={() => deleteUser()} className ="btn btn-danger m-1">
                         Delete
                       </button>
                       
@@ -140,7 +115,7 @@ function User() {
             </table>
           </div>
         </div>
-      </div>
+        </div>}
     </div>
   );
 }
