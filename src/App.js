@@ -11,26 +11,32 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserCreate from "./UserCreate";
 import ViewUser from "./ViewUser";
 import EditUser from "./EditUser";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "./UserContext";
+import Login from "./Login";
+import PortalLayout from "./PortalLayout";
+import { Formik, useFormik } from "formik";
+import axios from "axios";
+import DeleteUser from "./DeleteUser";
 
 
 function App() {
+
+  const {user} = useContext(UserContext)
   return (
     <BrowserRouter>
-    <div id="wrapper">
-      <Sidebar />
-      <div id="content-wrapper" class="d-flex flex-column">
-        <div id="content">
-          <Topbar />
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard/>}></Route>
-            <Route path="/user" element={<User/>}></Route>
-            <Route path="/userCreate" element={<UserCreate/>}></Route>
-            <Route path="/user/:id" element={<ViewUser/>}></Route>
-            <Route path="/edit/:id" element={<EditUser/>}></Route>
+     <Routes>
+            <Route path="/" element={<Login/>}></Route> 
+            <Route path="/portal" element={<PortalLayout/>}>
+            <Route path="dashboard" element={<Dashboard/>}></Route>
+            <Route path="user" element={<User/>}></Route>
+            <Route path="usercreate" element={<UserCreate/>}></Route>
+            <Route path="view/:id" element={<ViewUser/>}></Route>
+            <Route path="edit/:id" element={<EditUser/>}></Route>
+            <Route path="delete/:id" element={<DeleteUser/>}></Route>
+            </Route>
           </Routes>
-        </div>
-      </div>
-    </div>
+  
     </BrowserRouter>
   );
 }

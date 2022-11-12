@@ -20,11 +20,16 @@ function User() {
     }
   }
 
-  let deleteUser = () =>{
-    const result = window.confirm("Are you sure do you want to delete?");
-
-    if(result){
-    alert("Deleted");
+  let deleteUser = async (user1) =>{
+    try{
+      setLoading(true)
+      const user = await axios.delete(`https://635fff92ca0fe3c21aaa41e9.mockapi.io/user/${user1}`)
+     alert("User Deleted Successfully")
+     fetchData()
+     setLoading(false)
+    }
+    catch (error){
+      alert("User Can't Deleted")
     }
   }
   return (
@@ -32,7 +37,7 @@ function User() {
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-gray-800">Tables</h1>
         <Link
-          to={"/userCreate"}
+          to={"/portal/usercreate"}
           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
         >
           <i class="fas fa-download fa-sm text-white-50"></i> Create User
@@ -97,13 +102,13 @@ function User() {
                     <td>{user.dob}</td>
                     <td>{user.gender}</td>
                     <td>
-                      <Link to={`/user/${user.id}`} className ="btn btn-success m-1 ">
+                      <Link to={`/portal/view/${user.id}`} className ="btn btn-success m-1 ">
                         View
                       </Link>
-                      <Link to={`/edit/${user.id}`} className ="btn btn-warning m-1">
+                      <Link to={`/portal/edit/${user.id}`} className ="btn btn-warning m-1">
                         Edit
                       </Link>
-                      <button onClick={() => deleteUser()} className ="btn btn-danger m-1">
+                      <button onClick={() => deleteUser(user.id)} className ="btn btn-danger m-1">
                         Delete
                       </button>
                       

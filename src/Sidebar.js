@@ -17,7 +17,7 @@ function Sidebar() {
     <hr class="sidebar-divider my-0"/>
 
     <li class="nav-item active">
-        <Link to={"/dashboard"} class="nav-link">
+        <Link to={"dashboard"} class="nav-link">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></Link>
     </li>
@@ -32,11 +32,12 @@ function Sidebar() {
 
   
     <li class="nav-item">
-        <Link to={"/user"} class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+        <Link to={"user"} class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
             <span>User</span>
         </Link>
+
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
